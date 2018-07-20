@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import {Hero} from '../hero';
-import {HEROES} from '../mock-heros';
+import {HeroService} from '../hero.service';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-heroes',
@@ -9,15 +10,23 @@ import {HEROES} from '../mock-heros';
 })
 export class HeroesComponent implements OnInit {
 
-  constructor() { }
+  // here messageService do not need to be public since we do not bind anything in the template(int the html file)
+  constructor(private heroService: HeroService, private messageService: MessageService) { }
 
   ngOnInit() {
+    this.getHeroes();
   }
 
-  heroes = HEROES;
+  heroes: Hero[];
   selectedHero:Hero;
 
   selectHero(hero:Hero){
+    this.messageService.addMessage('HeroComponent: Selected new hero' + hero.name);
     this.selectedHero = hero;
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes()
+        .subscribe(heroes => this.heroes = heroes);
   }
 }
