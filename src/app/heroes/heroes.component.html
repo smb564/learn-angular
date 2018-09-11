@@ -5,4 +5,8 @@
   </li>
 </ul>
 
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+<!-- <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
+<div *ngIf="selectedHero">
+  <h2>{{selectedHero.name}} is my hero</h2>
+  <a routerLink="/hero/{{selectedHero.id}}"><input type="button" value="View Details"></a>
+</div>
